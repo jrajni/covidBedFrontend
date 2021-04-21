@@ -98,6 +98,8 @@ class Dashboard extends Component {
     this.setState({ isModalVisible: false });
   };
   resetHandler = () => {
+    this.getTodayZoneBasedData();
+
     this.setState({ locationBased: "", nameBased: "", filteredHospitals: [] });
   };
   componentDidMount() {
@@ -183,7 +185,7 @@ class Dashboard extends Component {
             className="btn btn-primary text-center"
             onClick={this.resetHandler}
           >
-            Reset
+            Reset/Refresh
           </button>
         </div>
         <Modal
