@@ -38,7 +38,7 @@ class Pages_login extends Component {
   };
   render() {
     if (this.props.auth && this.props.auth.user) {
-      return <Redirect to={"/dashboard"} />;
+      return <Redirect to={"/updateData"} />;
     }
     return (
       <AUX>

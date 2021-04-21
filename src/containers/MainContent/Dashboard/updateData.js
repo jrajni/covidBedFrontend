@@ -110,6 +110,7 @@ class AddClient extends Component {
       <AUX>
         <div className="page-content-wrapper">
           <div className="container-fluid" />
+          <h3>Welcome {this.props.auth.user.hospitalName}</h3>
           <form>
             <div className="form-group row">
               <label for="staticEmail" className="col-sm-2 col-form-label">
@@ -230,7 +231,7 @@ class AddClient extends Component {
                 onClick={(e) => {
                   this.submitHandler(e);
                 }}
-                className="ml-5 col-2 btn btn-primary text-center"
+                className="ml-5  btn btn-primary text-center"
               >
                 Update Data
               </button>
