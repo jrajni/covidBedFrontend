@@ -3,7 +3,7 @@ import AUX from "../../../hoc/Aux_";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import Config from "../../../config";
@@ -33,27 +33,27 @@ class Dashboard extends Component {
   };
   componentDidMount() {
     this.getTodayZoneBasedData();
-    const socket = io(`${Config.hostName}/api/socket`, {
-      pingInterval: 60000,
-      pingTimeout: 180000,
-      cookie: false,
-      origins: "*:*",
-      secure: true,
-      transports: ["flashsocket", "polling", "websocket"],
-      upgrade: false,
-      reconnection: true,
-    });
-    socket.on("insertHospital", (data) => {
-      this.socketData(data);
-    });
-    socket.on("deleteHospital", (data) => {
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    });
-    socket.on("updateHospital", (data) => {
-      this.PusherComponent(data);
-    });
+    // const socket = io(`${Config.hostName}/api/socket`, {
+    //   pingInterval: 60000,
+    //   pingTimeout: 180000,
+    //   cookie: false,
+    //   origins: "*:*",
+    //   secure: true,
+    //   transports: ["flashsocket", "polling", "websocket"],
+    //   upgrade: false,
+    //   reconnection: true,
+    // });
+    // socket.on("insertHospital", (data) => {
+    //   this.socketData(data);
+    // });
+    // socket.on("deleteHospital", (data) => {
+    //   setTimeout(() => {
+    //     window.location.reload();
+    //   }, 500);
+    // });
+    // socket.on("updateHospital", (data) => {
+    //   this.PusherComponent(data);
+    // });
   }
   socketData = async (data) => {
     let alreadyData = this.state.hospitals;

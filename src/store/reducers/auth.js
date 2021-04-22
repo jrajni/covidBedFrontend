@@ -7,6 +7,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  DATA_UPDATE,
   ALERT_CONFIG,
 } from "../constants/actionTypes";
 import jwt from "jsonwebtoken";
@@ -46,7 +47,11 @@ export default function(state = initialState, action) {
         sidebar: true,
         loginpage: !state.loginpage,
       };
-
+    case DATA_UPDATE:
+      let updateObj = state.user;
+      updateObj.alteredData.noOfBedsAvailable = payload.noOfBedsAvailable;
+      updateObj.alteredData.priceOfSingleBed = payload.priceOfSingleBed;
+      return { ...state, user: updateObj };
     case LOADING:
       return {
         ...state,

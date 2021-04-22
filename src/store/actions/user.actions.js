@@ -6,6 +6,7 @@ import {
   LOGIN_FAIL,
   USER_LOADED,
   AUTH_ERROR,
+  DATA_UPDATE,
   LOGOUT,
   CLEAR_ALERTS,
   CLEAR_PROFILE,
@@ -94,6 +95,14 @@ export const alertConfig = (data) => async (dispatch) => {
   });
 };
 
+export const updateHospitalData = (data) => (dispatch) => {
+  try {
+    dispatch({ type: DATA_UPDATE, payload: data });
+    dispatch(setAlert("Successfully Updated", "success"));
+  } catch (error) {
+    dispatch(setAlert("Server Error", "danger"));
+  }
+};
 // Logout
 export const logout = () => (dispatch) => {
   dispatch({ type: CLEAR_ALERTS });

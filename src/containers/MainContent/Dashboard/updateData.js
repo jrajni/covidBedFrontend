@@ -8,7 +8,10 @@ import PropTypes from "prop-types";
 import { ToastContainer, toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 import { connect } from "react-redux";
+import Alert from "../../../layouts/Alert";
+import { setAlert } from "../../../store/actions/alert.actions";
 
+import { updateHospitalData } from "../../../store/actions/user.actions";
 class AddClient extends Component {
   state = {
     hospitalName: "",
@@ -34,8 +37,6 @@ class AddClient extends Component {
       contact,
       yourName,
       alteredData,
-      //   noOfBedsAvailable,
-      //   priceOfSingleBed,
     } = this.props.auth.user;
     this.setState({
       hospitalName,
@@ -47,23 +48,7 @@ class AddClient extends Component {
       priceOfSingleBed: alteredData.priceOfSingleBed,
     });
   }
-  getClientBranches = async (id) => {
-    axios
-      .get(`${Config.hostName}/api/branch/${this.props.auth.user.clientId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "x-auth-token": this.props.auth.token,
-        },
-      })
-      .then(async (res) => {
-        console.log("branches", res.data.length);
-        await this.setState({ NoOfBranchesExist: res.data.length });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
   rangePicker = (dates, dateStrings) => {
     this.setState({ dates: dateStrings });
   };
@@ -72,15 +57,21 @@ class AddClient extends Component {
     this.setState({ description: e.target.value });
   };
 
+  inputHandler = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
   submitHandler = async (e) => {
     e.preventDefault();
+
     if (this.validator.allValid()) {
       try {
+        this.props.updateHospitalData(this.state);
         await axios
           .patch(
             `${Config.hostName}/api/hospital/updateData/${
               this.props.auth.user.hospitalId
             }`,
+            { state: this.state },
             {
               headers: {
                 "Content-Type": "application/json",
@@ -89,7 +80,9 @@ class AddClient extends Component {
               },
             }
           )
-          .then(async (res) => {});
+          .then(async (res) => {
+            console.log("Res", res.data);
+          });
       } catch (error) {
         console.log("error contact", error);
       }
@@ -102,14 +95,15 @@ class AddClient extends Component {
   };
 
   render() {
-    // if (!this.props.auth.user) {
-    //   return <Redirect to={"/all-hospitals"} />;
-    // }
+    if (!this.props.auth.user) {
+      return <Redirect to={"/all-hospitals"} />;
+    }
 
     return (
       <AUX>
         <div className="page-content-wrapper">
           <div className="container-fluid" />
+          <Alert />
           <h3>Welcome {this.props.auth.user.hospitalName}</h3>
           <form>
             <div className="form-group row">
@@ -133,7 +127,7 @@ class AddClient extends Component {
                 <input
                   className="form-control"
                   placeholder="Enter Name"
-                  onChange={this.inputHandler}
+                  // onChange={this.inputHandler}
                   name="yourName"
                   disabled
                   value={this.state.yourName}
@@ -151,7 +145,7 @@ class AddClient extends Component {
                   type="number"
                   placeholder="Enter Contact "
                   autoComplete="contact"
-                  onChange={this.inputHandler}
+                  // onChange={this.inputHandler}
                   name="contact"
                   value={this.state.contact}
                 />
@@ -174,9 +168,9 @@ class AddClient extends Component {
                   type="text"
                   placeholder="Enter New Branch Location"
                   autoComplete="location"
-                  onChange={this.inputHandler}
-                  disabled
+                  // onChange={this.inputHandler}
                   name="location"
+                  disabled
                   value={this.state.location}
                 />
                 <div className="text-danger">
@@ -196,6 +190,7 @@ class AddClient extends Component {
                 <input
                   className="form-control"
                   type="number"
+                  // disabled
                   placeholder="Enter No Of Beds Available"
                   onChange={this.inputHandler}
                   name="noOfBedsAvailable"
@@ -263,4 +258,7 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(AddClient);
+export default connect(
+  mapStateToProps,
+  { updateHospitalData, setAlert }
+)(AddClient);

@@ -59,7 +59,7 @@ class Pages_login extends Component {
 
                 <form className="form-horizontal m-t-30" action="/">
                   <div className="form-group">
-                    <label for="username">Email</label>
+                    <label htmlFor="username">Email</label>
                     <input
                       type="text"
                       name="email"
@@ -78,7 +78,7 @@ class Pages_login extends Component {
                     )}
                   </div>
                   <div className="form-group">
-                    <label for="userpassword">Password</label>
+                    <label htmlFor="userpassword">Password</label>
                     <input
                       type="password"
                       name="password"
@@ -96,21 +96,6 @@ class Pages_login extends Component {
                     )}
                   </div>
                   <div className="form-group row m-t-20">
-                    <div className="col-sm-6">
-                      <div className="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          className="custom-control-input"
-                          id="customControlInline"
-                        />
-                        <label
-                          className="custom-control-label"
-                          for="customControlInline"
-                        >
-                          Remember me
-                        </label>
-                      </div>
-                    </div>
                     <div className="col-sm-6 text-right">
                       <button
                         className="btn btn-primary w-md waves-effect waves-light"
@@ -159,7 +144,6 @@ Pages_login.propTypes = {
   setAlert: PropTypes.func.isRequired,
   loginclient: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired,
 };
 
 const mapStatetoProps = (state) => {
