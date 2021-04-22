@@ -81,7 +81,7 @@ class header extends Component {
 
   render() {
     if (!this.props.auth.user) {
-      return <Redirect to={"/login"} />;
+      return <Redirect to={"/all-hospitals"} />;
     }
     return (
       <div className="topbar">

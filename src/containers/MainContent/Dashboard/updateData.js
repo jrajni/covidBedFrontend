@@ -103,7 +103,7 @@ class AddClient extends Component {
 
   render() {
     if (!this.props.auth.user) {
-      return <Redirect to={"/login"} />;
+      return <Redirect to={"/all-hospitals"} />;
     }
 
     return (

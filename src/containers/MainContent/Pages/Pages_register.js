@@ -3,7 +3,8 @@ import AUX from "../../../hoc/Aux_";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { register, login, logout } from "../../../store/actions/user.actions";
-
+import Alert from "../../../layouts/Alert";
+import { setAlert } from "../../../store/actions/alert.actions";
 class Register extends Component {
   state = {
     hospitalName: "",
@@ -38,6 +39,7 @@ class Register extends Component {
       <AUX>
         <div className="accountbg" />
         <div className="wrapper-page">
+          <Alert />
           <div className="card">
             <div className="card-body">
               <h3 className="text-center m-0">
@@ -198,5 +200,5 @@ const mapStatetoProps = (state) => ({
 
 export default connect(
   mapStatetoProps,
-  { register }
+  { register, setAlert }
 )(Register);

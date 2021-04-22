@@ -12,7 +12,7 @@ const PrivateRoute = ({
   ...rest
 }) => {
   const dispatch = useDispatch();
-  if (!isAuthenticated) return <Redirect to={"/login"} />;
+  if (!isAuthenticated) return <Redirect to={"/all-hospitals"} />;
 
   return (
     <>
@@ -20,13 +20,13 @@ const PrivateRoute = ({
         {...rest}
         render={(props) =>
           !isAuthenticated && !loading && user == "undefined" ? (
-            <Redirect to="/login" />
+            <Redirect to="/all-hospitals" />
           ) : (
             token &&
             jwt.verify(token, Config.jwtSecret, function(err, decode) {
               if (err) {
                 dispatch(logout());
-                return <Redirect to="/login" />;
+                return <Redirect to="/all-hospitals" />;
               }
               return <Component {...props} />;
             })

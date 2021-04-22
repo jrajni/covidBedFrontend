@@ -139,13 +139,14 @@ class Pages_login extends Component {
           <div className="m-t-40 text-center">
             <p className="text-white">
               Don't have an account ?{" "}
-              <Link
-                to="register"
+              <a
+                // to="/register"
+                href="/register"
                 className="font-500 font-14 text-white font-secondary"
               >
                 {" "}
                 Signup Now{" "}
-              </Link>{" "}
+              </a>{" "}
             </p>
           </div>
         </div>

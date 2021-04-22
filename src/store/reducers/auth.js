@@ -87,6 +87,10 @@ export default function(state = initialState, action) {
         selectedCamera: "",
         tokenType: "",
         userBranches: [],
+        footer: false,
+        header: false,
+        sidebar: false,
+        loginpage: true,
       };
     default:
       return state;
