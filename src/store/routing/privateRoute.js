@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Config from "../config/Config";
@@ -46,7 +46,9 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(
-  mapStateToProps,
-  { logout }
-)(PrivateRoute);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { logout }
+  )(PrivateRoute)
+);

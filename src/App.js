@@ -5,6 +5,7 @@ import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import AUX from "./hoc/Aux_";
 import PrivateRoute from "./routing/privateRoute";
+import Sampler from "./containers/MainContent/Pages/sampler";
 const Register = lazy(() =>
   import("./containers/MainContent/Pages/Pages_register")
 );
@@ -43,6 +44,7 @@ class App extends Component {
               <Route exact path="/all-hospitals" component={AllHospitals} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route path="/sampler" component={Sampler} />
               {/* Dashboards */}
               <PrivateRoute path="/dashboard" component={Dashboard} />
               {/* Special Client Features*/}
@@ -84,4 +86,4 @@ const mapStatetoProps = (state) => {
   };
 };
 
-export default connect(mapStatetoProps)(App);
+export default withRouter(connect(mapStatetoProps)(App));
