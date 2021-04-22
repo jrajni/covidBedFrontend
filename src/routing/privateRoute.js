@@ -12,7 +12,7 @@ const PrivateRoute = ({
   ...rest
 }) => {
   const dispatch = useDispatch();
-  if (!isAuthenticated) return <Redirect to={"/pages/login"} />;
+  if (!isAuthenticated) return <Redirect to={"/login"} />;
 
   return (
     <>

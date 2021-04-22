@@ -4,9 +4,8 @@ import io from "socket.io-client";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import Config from "../../../../config";
-import { Table, Modal } from "antd";
+import { Input, Table, Modal } from "antd";
 const { Column } = Table;
-const dataValues = [];
 class Dashboard extends Component {
   state = {
     hospitals: [],
@@ -38,7 +37,9 @@ class Dashboard extends Component {
       if (this.state.filteredHospitals.length > 1) {
         this.state.filteredHospitals.map((i) => {
           if (
-            i.hospitalName.toLowerCase() === this.state.nameBased.toLowerCase()
+            i.hospitalName
+              .toLowerCase()
+              .includes(this.state.nameBased.toLowerCase())
           ) {
             filteredData.push(i);
           }
@@ -47,7 +48,9 @@ class Dashboard extends Component {
       } else {
         this.state.hospitals.map((i) => {
           if (
-            i.hospitalName.toLowerCase() === this.state.nameBased.toLowerCase()
+            i.hospitalName
+              .toLowerCase()
+              .includes(this.state.nameBased.toLowerCase())
           ) {
             filteredData.push(i);
           }
@@ -64,7 +67,9 @@ class Dashboard extends Component {
       if (this.state.filteredHospitals.length > 1) {
         this.state.filteredHospitals.map((i) => {
           if (
-            i.location.toLowerCase() === this.state.locationBased.toLowerCase()
+            i.location
+              .toLowerCase()
+              .includes(this.state.locationBased.toLowerCase())
           ) {
             filteredData.push(i);
           }
@@ -74,7 +79,9 @@ class Dashboard extends Component {
       } else {
         this.state.hospitals.map((i) => {
           if (
-            i.location.toLowerCase() === this.state.locationBased.toLowerCase()
+            i.location
+              .toLowerCase()
+              .includes(this.state.locationBased.toLowerCase())
           ) {
             filteredData.push(i);
           }
@@ -85,7 +92,6 @@ class Dashboard extends Component {
     }
   };
   modalHandler = (record) => {
-    console.log("record", record);
     this.setState({
       isModalVisible: !this.state.isModalVisible,
       currentHospitalData: record,
@@ -115,6 +121,7 @@ class Dashboard extends Component {
       reconnection: true,
     });
     socket.on("insertHospital", (data) => {
+      console.log("insert", data);
       this.socketData(data);
     });
     socket.on("deleteHospital", (data) => {
@@ -123,15 +130,15 @@ class Dashboard extends Component {
       }, 500);
     });
     socket.on("updateHospital", (data) => {
-      this.PusherComponent(data);
+      this.socketData(data);
     });
   }
   socketData = async (data) => {
-    let alreadyData = this.state.hospitals;
-    alreadyData = [...alreadyData, data];
+    let alreadyData = [...this.state.hospitals, data];
     await this.tableData(alreadyData);
   };
   tableData = async (tableData) => {
+    const dataValues = [];
     if (tableData.length) {
       await tableData.map((i, index) => {
         i.noOfBedsAvailable = i.alteredData.noOfBedsAvailable;
@@ -145,47 +152,47 @@ class Dashboard extends Component {
   };
   render() {
     return (
-      <div className="row pl-0 pr-0">
-        <div className="" />
-        <h3>Hospital Bed Finder </h3>
-        <div style={{ marginBottom: "20px" }}>
-          <input
-            placeholder="Search Name of hospital"
-            width="100%"
-            name="nameBased"
-            value={this.state.nameBased}
-            onChange={this.inputHandler}
-          />
-          &emsp;
-          <button
-            className="btn btn-primary text-center"
-            onClick={this.nameBasedHandler}
-          >
-            Search
-          </button>
+      <div className="container">
+        <h3 className="text-center">COVID-VACANT BEDS </h3>
+        <br />
+        <div>
+          <div className="m-2">
+            <Input
+              placeholder="Name of Hospital"
+              style={{ width: "60%" }}
+              name="nameBased"
+              value={this.state.nameBased}
+              onChange={this.inputHandler}
+            />
+            <button
+              className="btn btn-primary text-center pt-1 pb-1 ml-4"
+              onClick={this.nameBasedHandler}
+            >
+              Search
+            </button>
+          </div>
+          <div className="m-2">
+            <Input
+              placeholder="Enter Location"
+              style={{ width: "60%" }}
+              name="locationBased"
+              value={this.state.locationBased}
+              onChange={this.inputHandler}
+            />
+            <button
+              className="btn btn-primary text-center pt-1 pb-1 ml-4"
+              onClick={this.locationBasedHandler}
+            >
+              Search
+            </button>
+          </div>
         </div>
         <div>
-          <input
-            placeholder="Location Search"
-            width="100%"
-            name="locationBased"
-            value={this.state.locationBased}
-            onChange={this.inputHandler}
-          />
-          &emsp;
           <button
-            className="btn btn-primary text-center"
-            onClick={this.locationBasedHandler}
-          >
-            Search
-          </button>
-        </div>
-        <div>
-          <button
-            className="btn btn-primary text-center"
+            className="btn btn-secondary text-center m-2"
             onClick={this.resetHandler}
           >
-            Reset/Refresh
+            Reset / Refresh
           </button>
         </div>
         <Modal
@@ -194,19 +201,17 @@ class Dashboard extends Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>Name :&emsp; {this.state.currentHospitalData.hospitalName}</p>
-          <p>Address :&emsp;{this.state.currentHospitalData.address}</p>
-          <p>Location : &emsp;{this.state.currentHospitalData.location}</p>
+          <p>Name : {this.state.currentHospitalData.hospitalName}</p>
+          <p>Address : {this.state.currentHospitalData.address}</p>
+          <p>Location : {this.state.currentHospitalData.location}</p>
           <p>
-            Beds Available :&emsp;{" "}
-            {this.state.currentHospitalData.noOfBedsAvailable}
+            Beds Available : {this.state.currentHospitalData.noOfBedsAvailable}
           </p>
           <p>
-            Price per bed : &emsp;
-            {this.state.currentHospitalData.priceOfSingleBed}
+            Price per bed : {this.state.currentHospitalData.priceOfSingleBed}
           </p>
 
-          <p>{this.state.currentHospitalData.contact}</p>
+          <p>Contact : {this.state.currentHospitalData.contact}</p>
         </Modal>
         <Table
           // pagination={{
@@ -242,7 +247,7 @@ class Dashboard extends Component {
           <Column title="Contact" dataIndex="contact" key="contact" />
 
           <Column
-            title="No Of Beds Available"
+            title="Beds Available"
             dataIndex="noOfBedsAvailable"
             key="noOfBedsAvailable"
           />

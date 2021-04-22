@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import SimpleReactValidator from "simple-react-validator";
 import { loginclient } from "../../../store/actions/user.actions";
+import Alert from "../../../layouts/Alert";
+import { setAlert } from "../../../store/actions/alert.actions";
 
 import { Redirect } from "react-router-dom";
 
@@ -44,6 +46,7 @@ class Pages_login extends Component {
       <AUX>
         <div className="accountbg" />
         <div className="wrapper-page">
+          <Alert />
           <div className="card">
             <div className="card-body">
               <h3 className="text-center m-0">
@@ -166,5 +169,5 @@ const mapStatetoProps = (state) => {
 
 export default connect(
   mapStatetoProps,
-  { loginclient }
+  { loginclient, setAlert }
 )(Pages_login);

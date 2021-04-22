@@ -9,7 +9,6 @@ import { Redirect } from "react-router-dom";
 import Config from "../../../config";
 import { Table } from "antd";
 const { Column } = Table;
-const dataValues = [];
 class Dashboard extends Component {
   state = {
     hospitals: [],
@@ -62,6 +61,7 @@ class Dashboard extends Component {
     await this.tableData(alreadyData);
   };
   tableData = async (tableData) => {
+    const dataValues = [];
     console.log("TableDa", tableData);
     if (tableData.length) {
       await tableData.map((i, index) => {
