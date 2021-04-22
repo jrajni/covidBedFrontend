@@ -65,7 +65,6 @@ class AddClient extends Component {
 
     if (this.validator.allValid()) {
       try {
-        this.props.updateHospitalData(this.state);
         await axios
           .patch(
             `${Config.hostName}/api/hospital/updateData/${
@@ -81,7 +80,7 @@ class AddClient extends Component {
             }
           )
           .then(async (res) => {
-            console.log("Res", res.data);
+            this.props.updateHospitalData(this.state);
           });
       } catch (error) {
         console.log("error contact", error);
@@ -136,30 +135,6 @@ class AddClient extends Component {
             </div>
             <div className="form-group row">
               <label for="staticEmail" className="col-sm-2 col-form-label">
-                Contact
-              </label>
-              <div className="col-sm-8">
-                <input
-                  className="form-control"
-                  disabled
-                  type="number"
-                  placeholder="Enter Contact "
-                  autoComplete="contact"
-                  // onChange={this.inputHandler}
-                  name="contact"
-                  value={this.state.contact}
-                />
-                <div className="text-danger">
-                  {this.validator.message(
-                    "contact",
-                    this.state.contact,
-                    "required"
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="form-group row">
-              <label for="staticEmail" className="col-sm-2 col-form-label">
                 Location
               </label>
               <div className="col-sm-8">
@@ -177,6 +152,31 @@ class AddClient extends Component {
                   {this.validator.message(
                     "location",
                     this.state.location,
+                    "required"
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="form-group row">
+              <label for="staticEmail" className="col-sm-2 col-form-label">
+                Contact
+              </label>
+              <div className="col-sm-8">
+                <input
+                  className="form-control"
+                  // disabled
+                  type="number"
+                  placeholder="Enter Contact "
+                  autoComplete="contact"
+                  onChange={this.inputHandler}
+                  name="contact"
+                  value={this.state.contact}
+                />
+                <div className="text-danger">
+                  {this.validator.message(
+                    "contact",
+                    this.state.contact,
                     "required"
                   )}
                 </div>

@@ -51,6 +51,7 @@ export default function(state = initialState, action) {
       let updateObj = state.user;
       updateObj.alteredData.noOfBedsAvailable = payload.noOfBedsAvailable;
       updateObj.alteredData.priceOfSingleBed = payload.priceOfSingleBed;
+      updateObj.contact = payload.contact;
       return { ...state, user: updateObj };
     case LOADING:
       return {
